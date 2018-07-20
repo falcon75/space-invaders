@@ -9,7 +9,7 @@ pygame.display.set_caption('Space Invaders')
 clock = pygame.time.Clock()
 pygame.key.set_repeat(10,10)
 ship = pygame.image.load('ship.jpg')
-alien1 = pygame.image.load('alien.jpg')
+alien1 = pygame.image.load('alien.png')
 background = pygame.image.load('background.jpg')
 font1 = pygame.font.SysFont(None, 25)
 font2 = pygame.font.SysFont(None, 40)
@@ -17,16 +17,13 @@ font2 = pygame.font.SysFont(None, 40)
 def refresh():
     screen.fill((0xFF, 0xFF, 0xFF))
     screen.blit(background,(0,0))
-    for item in game.objects:
-        if item.ob == 'alien':
-            screen.blit(alien1, (item.properties[0],item.properties[1]))
     text = font1.render('Score: ' + str(game.score) + '  Level: ' + str(game.level), True, (0,0,0))
     screen.blit(text, (275,5))
     for item in game.objects:
         if item.ob == 'user':
             screen.blit(ship, (item.properties[0],item.properties[1]))
         elif item.ob == 'alien':
-            pass
+            screen.blit(alien1, (item.properties[0],item.properties[1]))
         else:
             pygame.draw.rect(screen, (0,0,0),item.properties)
     pygame.display.flip()
