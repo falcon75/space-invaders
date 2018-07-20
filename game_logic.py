@@ -8,14 +8,14 @@ class space_invaders(object):
         self.score = 0
         self.level = 0
         self.start_time = time.time()
-        self.user = player([325,425,50,50])
+        self.user = player([325,400,50,50])
         self.objects = [self.user]
         self.generate_alien()
         self.alien_rates = {0:60,1:50,2:42,3:35,4:30,5:26,6:23,7:21,8:20}
 
     def generate_alien(self):
         x = random.randint(100,580)
-        a1 = alien(200,[x,10,20,20])
+        a1 = alien(200,[x,25,20,20])
         self.objects.append(a1)
 
     def shoot(self):
