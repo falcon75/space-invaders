@@ -8,11 +8,19 @@ screen = pygame.display.set_mode((700,500))
 pygame.display.set_caption('Space Invaders')
 clock = pygame.time.Clock()
 pygame.key.set_repeat(10,10)
+ship = pygame.image.load('ship.jpg')
+font1 = pygame.font.SysFont(None, 25)
+font2 = pygame.font.SysFont(None, 40)
 
 def refresh():
     screen.fill((0xFF, 0xFF, 0xFF))
+    text = font1.render('Score: ' + str(game.score) + '  Level: ' + str(game.level), True, (0,0,0))
+    screen.blit(text, (200,5))
     for item in game.objects:
-        pygame.draw.rect(screen, (0,0,0),item.properties)
+        if item.ob == 'user':
+            screen.blit(ship, (item.properties[0],item.properties[1]))
+        else:
+            pygame.draw.rect(screen, (0,0,0),item.properties)
     pygame.display.flip()
 
 game = game_logic.space_invaders()
@@ -44,21 +52,32 @@ while not fail:
             if item.properties[1] > 480:
                 game.objects.remove(item)
                 fail = True
-
-    if random.randint(1,75) == 1:
+                
+    if game.level > 8:
+        rate = game.alien_rates[8]
+    else:
+        rate = game.alien_rates[game.level]
+        
+    if random.randint(1,rate) == 1:
         game.generate_alien()
 
     for alien in game.objects:
         if alien.ob == 'alien':
-            a = alien.properties
             for bullet in game.objects:
                 if bullet.ob == 'bullet':
-                    b = bullet.properties
-                    if game_logic.do_boxes_overlap(a,b) == True:
+                    if game_logic.do_boxes_overlap(alien.properties,bullet.properties) == True:
                         game.objects.remove(alien)
                         game.objects.remove(bullet)
                         game.score += 20
-    
+
+    game.get_level()
     refresh()
-    clock.tick(15)
+    clock.tick(30)
+
+screen.fill((0xFF, 0xFF, 0xFF))
+text = font2.render('Game Over', True, (0,0,0))
+screen.blit(text, (250,200))
+text = font1.render('Score: ' + str(game.score) + '  Level: ' + str(game.level), True, (0,0,0))
+screen.blit(text, (250,250))
+pygame.display.flip()
 

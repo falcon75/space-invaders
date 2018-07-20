@@ -27,7 +27,7 @@ class player():
 class bullet():
 
     def __init__(self, pos):
-        self.properties = [pos[0],pos[1],5,10]
+        self.properties = [pos[0] - 2,pos[1],5,10]
         self.ob = 'bullet'
 
     def drift(self):
