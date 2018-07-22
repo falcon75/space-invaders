@@ -2,13 +2,17 @@
 
 class alien():
     
-    def __init__(self, pointScore, shape):
+    def __init__(self, pointScore, shape, alienType):
         self.pointScore = pointScore
         self.properties = shape
         self.ob = 'alien'
+        self.alienType = alienType
 
     def drift(self):
-        self.properties[1] += 1
+        if self.alienType == 'n':
+            self.properties[1] += 1
+        elif self.alienType == 's':
+            self.properties[0] += 1
 
 class player():
     
@@ -32,5 +36,3 @@ class bullet():
 
     def drift(self):
         self.properties[1] -= 3
-
-

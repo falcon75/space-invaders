@@ -13,9 +13,14 @@ class space_invaders(object):
         self.generate_alien()
         self.alien_rates = {0:60,1:50,2:42,3:35,4:30,5:26,6:23,7:21,8:20}
 
+    #Functions to generate an alien, 10% chance of generating a special alien
     def generate_alien(self):
-        x = random.randint(100,580)
-        a1 = alien(200,[x,25,20,20])
+        if random.randint(1,10) == 1:
+            x = random.randint(50,250)
+            a1 = alien(50,[20,x,30,30],'s')
+        else:
+            x = random.randint(100,580)
+            a1 = alien(20,[x,25,20,20],'n')
         self.objects.append(a1)
 
     def shoot(self):
@@ -30,18 +35,14 @@ class space_invaders(object):
             count += 1
         self.level = count
 
+
 def do_boxes_overlap(p1, p2):
     if overlapping(p1[0], p1[2], p2[0], p2[2]) and overlapping(p1[1], p1[3], p2[1], p2[3]):
         return True
 
 def overlapping(a1, a2, b1, b2):
-    
-    axmin = a1
-    axmax = a1 + a2
-    bxmin = b1
-    bxmax = b1 + b2
 
-    if greater(abs(axmin - bxmax),abs(axmax - bxmin)) > (a2 + b2):
+    if greater(abs(a1 - (b1 + b2)),abs((a1 + a2) - b1)) > (a2 + b2):
         return False
     else:
         return True
